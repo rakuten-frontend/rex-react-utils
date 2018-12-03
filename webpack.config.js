@@ -153,8 +153,7 @@ const webpackConfig = {
     concatenateModules: true,
     minimize: true,
     minimizer: [
-      googleClosureCompiler,
-      optimizeCss
+      googleClosureCompiler
     ],
     splitChunks: {
       chunks: 'all',
