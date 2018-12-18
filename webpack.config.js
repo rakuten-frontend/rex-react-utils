@@ -2,7 +2,9 @@ const webpack = require('webpack');
 const merge = require('webpack-merge');
 const pathResolve = require('path').resolve;
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const ClosureCompiler = require('google-closure-compiler-js').webpack;
+const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const package = require('./package.json');
 const libraryName = package.name.toLowerCase().replace(/(\b|-)\w/g, (m) => m.toUpperCase().replace(/-/, ''));
@@ -12,13 +14,13 @@ const pathNodeModules = pathResolve('./node_modules');
 // Webpack entry and output settings
 const entry = {};
 entry[package.name] = './src/utils.js';
-entry['example'] = './src/Example.jsx';
 
 // Webpack config
 const mode = 'production';
 const name = 'production.config';
 const filename = `[name].production.min`;
 const filenameJS = `${filename}.js`;
+const filenameCSS = `${filename}.css`;
 
 const output = {
   path: pathResolve(__dirname, `build/node_modules/${package.name}`),
@@ -38,6 +40,49 @@ const babelLoader = {
   use: {
     loader: 'babel-loader'
   }
+};
+
+// Creates style nodes from JS strings
+const extracCssLoader = {
+  loader: MiniCssExtractPlugin.loader
+};
+
+// Translates CSS into CommonJS
+const cssLoader = {
+  loader: 'css-loader',
+  options: {
+    includePaths: [
+      pathSrc,
+      pathNodeModules
+    ]
+  }
+};
+
+// Compiles Sass to CSS
+const sassLoader = {
+  loader: 'sass-loader',
+  options: {
+    includePaths: [
+      pathSrc
+    ]
+  }
+};
+
+// Styles loader for Css and Sass
+const stylesLoader = {
+  test: /\.(css|scss)$/,
+  use: [
+    extracCssLoader,
+    cssLoader,
+    sassLoader
+  ]
+};
+
+const fileLoader = {
+  test: /\.(woff|woff2|eot|ttf|otf)$/,
+  use: [
+    'file-loader'
+  ]
 };
 
 // Resolve extenstions for JS and JSX
@@ -71,6 +116,12 @@ const externals = {
 // Clean build folder
 const cleanBuildPlugin = new CleanWebpackPlugin(['build']);
 
+// Extract CSS from javascript bundle
+const cssExtractPlugin = new MiniCssExtractPlugin({
+  filename: filenameCSS,
+  chunkFilename: filenameCSS,
+});
+
 // Google Closure compiler instead of uglify
 const googleClosureCompiler = new ClosureCompiler({
   options: {
@@ -83,6 +134,15 @@ const googleClosureCompiler = new ClosureCompiler({
     processCommonJsModules: false,
     rewritePolyfills: false
   }
+});
+
+// Optimize css output
+const optimizeCss = new OptimizeCSSAssetsPlugin({
+  cssProcessorOptions: {
+    discardComments: {
+      removeAll: false
+    }
+  },
 });
 
 // NPM settings
@@ -141,7 +201,9 @@ const webpackConfig = {
   output: output,
   module: {
     rules: [
-      babelLoader
+      babelLoader,
+      stylesLoader,
+      fileLoader
     ]
   },
   resolve: resolve,
@@ -153,21 +215,9 @@ const webpackConfig = {
     concatenateModules: true,
     minimize: true,
     minimizer: [
-      googleClosureCompiler
-    ],
-    splitChunks: {
-      chunks: 'all',
-      name: true,
-      cacheGroups: {
-        react: {
-          test: /[\\/]node_modules[\\/](react|react-dom)[\\/]/,
-          name: 'react',
-          chunks: 'all',
-          priority: 2,
-          reuseExistingChunk: true
-        },
-      }
-    }
+      googleClosureCompiler,
+      optimizeCss
+    ]
   }
 };
 
@@ -176,6 +226,7 @@ const production = merge(
   webpackConfig, {
     plugins: [
       cleanBuildPlugin,
+      cssExtractPlugin,
       npmIndexJSPlugin,
       npmReadmePlugin,
       npmPackagePlugin,
@@ -189,10 +240,16 @@ const modeDev = 'development';
 const nameDev = 'development.config';
 const filenameDev = `[name].development`;
 const filenameJSDev = `${filenameDev}.js`;
+const filenameCSSDev = `${filenameDev}.css`;
 const outputDev = {
   filename: filenameJSDev,
   chunkFilename: filenameJSDev,
 };
+
+const cssExtractPluginDev = new MiniCssExtractPlugin({
+  filename: filenameCSSDev,
+  chunkFilename: filenameCSSDev,
+});
 
 const development = merge(
   webpackConfig, {
@@ -200,7 +257,9 @@ const development = merge(
     name: nameDev,
     output: outputDev,
     externals: externals,
-    plugins: [],
+    plugins: [
+      cssExtractPluginDev
+    ],
     optimization: {
       minimize: false
     }
