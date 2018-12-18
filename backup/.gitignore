@@ -1,7 +1,0 @@
-!.gitignore
-!.npmignore
-!.babelrc
-.cache
-node_modules/
-build/
-dist/

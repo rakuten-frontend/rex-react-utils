@@ -13,7 +13,7 @@ const pathNodeModules = pathResolve('./node_modules');
 
 // Webpack entry and output settings
 const entry = {};
-entry[package.name] = './src/Utils.jsx';
+entry[package.name] = './src/utils.js';
 
 // Webpack config
 const mode = 'production';
