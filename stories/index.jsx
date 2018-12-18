@@ -1,34 +1,50 @@
 import React from 'react';
 import { storiesOf } from '@storybook/react';
-import { withKnobs, text } from '@storybook/addon-knobs';
+import { action } from '@storybook/addon-actions';
+import { withKnobs, text, boolean, number, select } from '@storybook/addon-knobs';
 import { withInfo } from '@storybook/addon-info';
 import { checkA11y } from '@storybook/addon-a11y';
-import { host } from 'storybook-host';
+import { withInspectHtml } from 'storybook-inspecthtml';
 
-const Example = (
+const Utils = (
   process.env.NODE_ENV === 'production' ?
-    require('../build/node_modules/rex-react-utils/example.production.min').default :
-    require('../src/Example').default
+    require('../build/node_modules/rex-react-utils').default :
+    require('../src/Utils').default
 );
 
-const stories = storiesOf('Utils Example', module);
+const stories = storiesOf('Utils', module);
+stories.addDecorator(withInspectHtml);
 stories.addDecorator(checkA11y);
 stories.addDecorator(withKnobs);
 stories.addDecorator(withInfo);
-stories.addDecorator(
-  host({
-    align: 'center bottom',
-    height: '80%',
-    width: 425,
-    title: 'How to compose multiple classNames and avoid the empty `class` attribute on DOM elements'
-  }),
-);
-// Stories
-stories.add('composing classNames', () => {
 
-  const textWelcome = text('class', 'alert alert-success alert-dismissible');
+// Stories
+stories.add('default', () => <Utils />);
+stories.add('with text', () => <Utils text={'Welcome to React example'} />);
+stories.add('with className', () => <Utils className={'color-black active'} />);
+
+stories.add('with onClick', () => {
+  const onClickSample = action('clicked');
 
   return (
-    <Example className={textWelcome} />
+    <Utils onClick={onClickSample} />
+  );
+});
+
+stories.add('with children', () => {
+
+  return (
+    <Utils>
+      <p>Hello World</p>
+    </Utils>
+  );
+});
+
+stories.add('with dynamic props', () => {
+
+  const textWelcome = text('text', 'Welcome to Dynamic React');
+
+  return (
+    <Utils text={textWelcome} />
   );
 });

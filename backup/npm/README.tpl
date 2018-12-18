@@ -1,13 +1,11 @@
 # ReX React UI Components Library
 ## __COMPONENT_NAME__
 
-This project is part of Rex Design Language and it can be used to create React UI Components.
+This project is part of Rex Design Language.
 
 ## How it was built 
 
 1. Build tool: webpack 4
-1. Codebase: Fork of Bootstrap project + Rex custom styles
-1. Css engine: Sass
 1. JavaScript component: React
 
 ## How to install
@@ -20,12 +18,20 @@ npm install __COMPONENT_NAME__ --save
 
 ### JavaScript Import (ES6)
 
-```
-import RexComponent from '__COMPONENT_NAME__';
+#### composeClassName
 
-function MyComponent() {
+Helps to compose multiple classNames and avoid the empty `class` attribute on DOM elements.
+
+```
+import { composeClassName } from '__COMPONENT_NAME__';
+
+function MyComponent({
+  className
+}) {
+  const classList = composeClassName(className);
+
   return (
-    <RexComponent>
+    <div {...classList}>Welcome to React</div>
   );
 }
 ```
