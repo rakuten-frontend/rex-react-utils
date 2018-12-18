@@ -1,7 +1,7 @@
 # ReX React UI Components Library
-## rex-react-utils
+## ReX React UI Component Starter Kit
 
-This project is part of ReX Design Language.   
+This project is part of ReX Design Language and it can be used to create React UI Components.   
 For more information visit:   
 
 Github  
@@ -13,8 +13,33 @@ https://www.npmjs.com/org/rakuten-frontend
 ## How it was built 
 
 1. Build tool: webpack 4
+1. Codebase: Fork of Bootstrap project + ReX custom styles
+1. Css engine: Sass
 1. JavaScript component: React
-1. Base code: ReX React UI Component Starter Kit (https://github.com/rakuten-frontend/rex-react-component-starter-kit)
+
+## What you can do
+
+This project is a started kit, it contains the settings to start the creations of a React component and publish it to NPM.   
+
+Use it as a basement and reference for your own project and customize it as you will.  
+
+If you need a full environment to create a React Web App, try the react-create-app to get a full environment for your App or use any other started kit.
+
+## How to start to work
+
+1. Create your `new git repository`.
+1. Clone or download this project.
+1. Import the code from `rex-react-component-starter-kit` to your `new git repository`.
+
+Note: Don't forget to import the hidden dot config files such as .babelrc, .gitignore, .storybook, etc.
+
+## Initial setup
+
+Run this command for first time only to initialize your project.   
+
+```
+npm run init:component
+```
 
 ## How to start the project
 
@@ -26,7 +51,7 @@ npm start
 
 ## How to build
 
-The build task will generate a NPM package ready to be published and also a static version of Storybook, one folder for NPM `./build/node_modules/rex-react-utils` and other one for Github pages `./docs`.   
+The build task will generate a NPM package ready to be published and also a static version of Storybook, one folder for NPM `./build/node_modules/PACKAGE_NAME` and other one for Github pages `./docs`.   
 
 ```
 npm run build
@@ -53,14 +78,14 @@ Build the project first.
 After that run the following commands:
 
 ```
-cd build/node_modules/rex-react-utils
+cd build/node_modules/PACKAGE_NAME
 npm login
 npm publish
 ```
 
 Once the process finish, take a look to the NPM site:   
 
-https://www.npmjs.com/package/rex-react-utils
+https://www.npmjs.com/package/PACKAGE_NAME
 
 ## Javascript and React related documents
 

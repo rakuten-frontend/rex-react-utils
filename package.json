@@ -1,6 +1,6 @@
 {
   "name": "rex-react-utils",
-  "version": "0.0.2",
+  "version": "1.0.0",
   "description": "ReX React UI Component",
   "main": "src/utils.js",
   "scripts": {
@@ -37,20 +37,28 @@
     "@storybook/react": "^4.0.6",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^1.0.0",
     "copy-webpack-plugin": "^4.6.0",
+    "css-loader": "^1.0.1",
     "google-closure-compiler-js": "^20180610.0.0",
     "http-server": "^0.11.1",
-    "storybook-host": "^5.0.3",
+    "mini-css-extract-plugin": "^0.4.4",
+    "node-sass": "^4.10.0",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "sass-loader": "^7.1.0",
+    "storybook-inspecthtml": "0.0.4",
+    "style-loader": "^0.23.1",
     "webpack": "^4.21.0",
     "webpack-cli": "^3.1.2",
     "webpack-merge": "^4.1.4"
   },
   "dependencies": {
     "react": "^16.5.2",
-    "react-dom": "^16.5.2"
+    "react-dom": "^16.5.2",
+    "rex-core": "^1.1.0"
   }
 }
