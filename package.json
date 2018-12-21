@@ -1,6 +1,6 @@
 {
   "name": "rex-react-utils",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "ReX React UI Component",
   "main": "src/utils.js",
   "scripts": {
