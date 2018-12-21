@@ -1,7 +1,7 @@
 export function composeClassName(cssClassList) {
-  return {
-    className: cssClassList.filter(cssClass => !isEmptyClassName(cssClass)).join(' ')
-  };
+  const list = cssClassList.filter(cssClass => !isEmptyClassName(cssClass)).join(' ');
+
+  return (list.length > 0) ? list : null;
 }
 
 export function isEmptyClassName(cssClass) {
