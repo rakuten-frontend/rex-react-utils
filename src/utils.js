@@ -1,13 +1,36 @@
 export function composeClassName(cssClassList) {
-  return {
-    className: cssClassList.filter(cssClass => !isEmptyClassName(cssClass)).join(' ')
-  };
+
+  let list = [];
+
+  if (Array.isArray(cssClassList)) {
+    list = filterListClassName(cssClassList);
+  }
+
+  return createClassName(list);
 }
 
-export function isEmptyClassName(cssClass) {
-  if (cssClass.trim().length <= 0) {
-    return true;
+function filterListClassName(cssClassList) {
+  return cssClassList.filter(cssClass => isValidClassName(cssClass));
+}
+
+function createClassName(list) {
+  if (list.length > 0) {
+    return {
+      className: list.join(' ')
+    }
   } else {
-    return false;
+    return null;
   }
+}
+
+export function isValidClassName(cssClass) {
+  let isValid = false;
+
+  if(typeof cssClass === 'string') {
+    if (cssClass.trim().length > 0) {
+      isValid = true;
+    }
+  }
+
+  return isValid;
 }
