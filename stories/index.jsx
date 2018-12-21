@@ -16,13 +16,43 @@ stories.addDecorator(withInspectHtml);
 stories.addDecorator(withInfo);
 
 // Stories
-stories.add('composing classNames', () => {
+stories.add('with values', () => {
 
   const classList = composeClassName([
-    'alert',
-    'alert-success',
-    'alert-dismissible'
+    'sample',
+    'sample-second',
+    'sample-third'
   ]);
+
+  return (
+    <p {...classList}>Welcome to React</p>
+  );
+});
+
+stories.add('with empty values', () => {
+
+  const classList = composeClassName([
+    '',
+    ''
+  ]);
+
+  return (
+    <p {...classList}>Welcome to React</p>
+  );
+});
+
+stories.add('without array items', () => {
+
+  const classList = composeClassName([]);
+
+  return (
+    <p {...classList}>Welcome to React</p>
+  );
+});
+
+stories.add('without array parameter', () => {
+
+  const classList = composeClassName();
 
   return (
     <p {...classList}>Welcome to React</p>
